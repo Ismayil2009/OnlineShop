@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Магазин</title>
+</head>
+<body>
+	<header>
+		<h1>Магазин</h1>
+  </header>
+  <nav>
+    <ul>
+      <li><a href="#">Главная</a></li>
+      <li><a href="#">О нас</a></li>
+      <li><a href="#">Контакты</a></li>
+      <li><a href="#">Корзина</a></li>
+    </ul>
+  </nav>
+  <div class="search-container">
+    <input type="text" placeholder="Search for products" id="search-bar">
+    <button type="button" onclick="searchProducts()">Search</button>
+  </div>
+  <div class="product-container">
+    <div class="container">
+      <div class="product-card">
+        <img src="https://via.placeholder.com/300x200" alt="Product">
+        <h2>Product 1</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget aliquet nunc. Nam sed tincidunt tellus, non rutrum velit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. </p>
+        <p>$19.99</p>
+        <button class="add-to-cart">Добавить в корзину</button>
+      </div>
+      <div class="product-card">
+        <img src="https://via.placeholder.com/300x200" alt="Product">
+        <h2>Product 2</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget aliquet nunc. Nam sed tincidunt tellus, non rutrum velit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. </p>
+        <p>$29.99</p>
+        <button class="add-to-cart">Добавить в корзину</button>
+      </div>
+      <div class="product-card">
+        <img src="https://via.placeholder.com/300x200" alt="Product">
+        <h2>Product 3</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget aliquet nunc. Nam sed tincidunt tellus, non rutrum velit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. </p>
+        <p>$39.99</p>
+        <button class="add-to-cart">Добавить в корзину</button>
+      </div>
+  </div>
+  <aside>
+    <h2>Корзина товаров:</h2>
+    <ul class="cart-items">
+    </ul>
+  </aside>
+  <aside>
+    <ul class="cart-items"></ul>
+    <button class="clear-cart">Очистить корзину </button>
+  </aside>
+  <footer>
+    <ul class="social-icons">
+      <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+      <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+      <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+      <li><a href="#"><i class="fab fa-youtube"></i></a></li>
+    </ul>
+  </footer>
+  <button id="scroll-up-btn">&#11014</button>
+  <button id="scroll-down-btn">&#11015</button>
+
+
+
+
+  <script>
+    const addToCartButtons = document.querySelectorAll(".add-to-cart");
+    const cartItemsList = document.querySelector(".cart-items");
+  
+    addToCartButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        const product = button.parentElement;
+        const productTitle = product.querySelector("h2").innerText;
+  
+        const cartItem = document.createElement("li");
+        cartItem.innerHTML = `<span>${productTitle}</span>`;
+  
+        cartItemsList.appendChild(cartItem);
+      });
+    });
+
+
+      const clearCartButton = document.querySelector(".clear-cart");
+  clearCartButton.addEventListener("click", () => {
+    cartItemsList.innerHTML = "";
+  });
+
+
+  function searchProducts() {
+    // Получаем значение из текстового поля
+    const input = document.getElementById("search-bar");
+    const query = input.value.toLowerCase();
+    // Получаем все карточки продуктов
+    const products = document.querySelectorAll(".product-card");
+    // Перебираем карточки и скрываем те, которые не соответствуют запросу
+    for (let i = 0; i < products.length; i++) {
+      const title = products[i].querySelector("h2").textContent.toLowerCase();
+      if (title.indexOf(query) === -1) {
+        products[i].style.display = "none";
+      } else {
+        products[i].style.display = "block";
+      }
+    }
+  }
+
+  // Получаем кнопки вверх и вниз
+  const scrollUpBtn = document.querySelector('#scroll-up-btn');
+  const scrollDownBtn = document.querySelector('#scroll-down-btn');
+
+  // Обрабатываем нажатие на кнопку "вверх"
+  scrollUpBtn.addEventListener('click', () => {
+    window.scrollBy({
+      top: -window.innerHeight, // прокручиваем на высоту видимой области окна
+      behavior: 'smooth' // добавляем плавный скроллинг
+    });
+  });
+
+  // Обрабатываем нажатие на кнопку "вниз"
+  scrollDownBtn.addEventListener('click', () => {
+    window.scrollBy({
+      top: window.innerHeight, // прокручиваем на высоту видимой области окна
+      behavior: 'smooth' // добавляем плавный скроллинг
+    });
+  });
+
+
+  </script>
+
+
+
+
+
+<style>
+  #scroll-up-btn {
+    position: fixed;
+    bottom: 70px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    color: white;
+    background-color: #333;
+    border-radius: 50%;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    z-index: 9999;
+  }
+  #scroll-down-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    color: white;
+    background-color: #333;
+    border-radius: 50%;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    z-index: 9999;
+  }
+
+  #scroll-up-btn:hover,
+  #scroll-down-btn:hover {
+    background-color: #555;
+  }
+
+  .search-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .search-container input[type=text] {
+    margin-top: 25px;
+    padding: 10px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #f2f2f2;
+    width: 30%;
+    font-size: 16px;
+  }
+
+  .search-container button {
+    margin-top: 25px;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #333;
+    color: white;
+    font-size: 16px;
+  }
+
+  .search-container button:hover {
+    background-color: #444;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial;
+  }
+
+  header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+  }
+
+  nav {
+    background-color: #444;
+    color: #fff;
+    padding: 20px;
+  }
+
+  nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  nav li {
+    display: inline-block;
+    margin-right: 20px;
+  }
+
+  nav a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  nav a:hover {
+    color: #ccc;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .product-card {
+    background-color: #f9f9f9;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+    width: calc(33.33% - 20px);
+    box-sizing: border-box;
+  }
+
+  .product-card img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .product-card h2 {
+    margin-top: 0;
+  }
+
+  .add-to-cart {
+    border-radius: 8px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 10px;
+    cursor: pointer;
+  }
+
+  .add-to-cart:hover {
+    background-color: #444;
+  }
+
+  aside {
+    background-color: #eee;
+    padding: 20px;
+  }
+
+  .clear-cart{
+    border-radius: 8px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 10px;
+    cursor: pointer;
+  }
+
+  .clear-cart:hover {
+    background-color: #444;
+  }
+
+  .cart-items {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .cart-items li {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .cart-items li:last-child {
+    margin-bottom: 0;
+  }
+
+  .cart-items li span {
+    margin-right: 10px;
+  }
+
+  .social-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+
+  .social-icons li {
+    margin-right: 10px;
+  }
+
+  .social-icons a {
+    display: block;
+    width: 40px;
+    height: 40px;
+    background-color: #333;
+    color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 40px;
+    font-size: 20px;
+    transition: background-color 0.3s ease-in-out;
+  }
+
+  .social-icons a:hover {
+    background-color: #444;
+  }
+</style>
